@@ -9,7 +9,9 @@ export async function getChromaClient() {
       if (heartbeat > 0) {
         return client;
       }
-    } catch {}
+    } catch {
+      console.warn("Chroma connection error, retrying in 1 second...");
+    }
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
