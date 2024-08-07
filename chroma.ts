@@ -6,8 +6,6 @@ export async function getChromaClient() {
   while (true) {
     try {
       const heartbeat = await client.heartbeat();
-      console.log("Connected to ChromaDB");
-
       if (heartbeat > 0) {
         return client;
       }

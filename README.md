@@ -2,7 +2,7 @@
 
 This is a simple Deno CLI app that demonstrates how to use embeddings in a Deno CLI app.
 
-## Getting Started
+## Running the sample docs
 
 To run this app, you need to have following:
 
@@ -20,9 +20,9 @@ ollama pull llama3.1
 ```
 
 ```sh
-deno task dev embed <path_with_markdown>
+deno task dev embed ./sample-docs
 ```
 
 ```sh
-deno task dev prompt "whatever question you want to ask about the markdown files"
+deno task dev prompt "What animals are llamas related to?"
 ```

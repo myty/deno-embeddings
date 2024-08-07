@@ -11,24 +11,24 @@ export const prompt = async (prompt: string) => {
     name: "docs",
   });
 
-  const response = await ollama.embeddings({
+  const embeddingsResponse = await ollama.embeddings({
     prompt,
     model: MODELS.embed,
   });
 
   const results = await collection.query({
-    queryEmbeddings: [response["embedding"]],
+    queryEmbeddings: [embeddingsResponse["embedding"]],
     nResults: 1,
   });
 
   const data = results["documents"][0][0];
 
-  const output = await ollama.generate({
+  const { response: promptResponse } = await ollama.generate({
     model: MODELS.generate,
     prompt: `Using this data: ${data}. Respond to this prompt: ${prompt}`,
   });
 
   spinner.stop();
 
-  return output["response"];
+  console.log(promptResponse);
 };
