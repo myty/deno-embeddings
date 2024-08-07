@@ -1,4 +1,4 @@
-# Demo of using embeddings in a Deno CLI app
+# Embeddings in Deno (Demo)
 
 This is a simple Deno CLI app that demonstrates how to use embeddings in a Deno CLI app.
 
