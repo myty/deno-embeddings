@@ -16,16 +16,20 @@ export const prompt = async (prompt: string) => {
     model: MODELS.embed,
   });
 
+  embeddingsResponse.embedding;
+
   const results = await collection.query({
     queryEmbeddings: [embeddingsResponse["embedding"]],
     nResults: 1,
   });
 
   const data = results["documents"][0][0];
+  const { path } = results.metadatas[0][0] ?? {};
 
   const { response: promptResponse } = await ollama.generate({
     model: MODELS.generate,
-    prompt: `Using this data: ${data}. Respond to this prompt: ${prompt}`,
+    prompt:
+      `Begin your response with "Based on '${path}'" and using this data: ${data}, respond to this prompt: ${prompt}`,
   });
 
   spinner.stop();
