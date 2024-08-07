@@ -1,11 +1,11 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import ollama from "ollama";
-import { ChromaClient } from "chromadb";
 import { MODELS } from "../models.ts";
+import { getChromaClient } from "../chroma.ts";
 
 export const embed = async (path: string) => {
-  const client = new ChromaClient();
+  const client = await getChromaClient();
   const collection = await client.getOrCreateCollection({
     name: "docs",
   });

@@ -1,9 +1,10 @@
 import ollama from "ollama";
-import { ChromaClient } from "chromadb";
 import { MODELS } from "../models.ts";
+import { getChromaClient } from "../chroma.ts";
 
 export const prompt = async (prompt: string) => {
-  const client = new ChromaClient();
+  const client = await getChromaClient();
+
   const collection = await client.getOrCreateCollection({
     name: "docs",
   });
