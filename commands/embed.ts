@@ -2,6 +2,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import ollama from "ollama";
 import { ChromaClient } from "chromadb";
+import { MODELS } from "../models.ts";
 
 export const embed = async (path: string) => {
   const client = new ChromaClient();
@@ -13,7 +14,7 @@ export const embed = async (path: string) => {
     console.log(`Embedding document: ${document.path}`);
 
     const { embedding } = await ollama.embeddings({
-      model: "mxbai-embed-large",
+      model: MODELS.embed,
       prompt: document.body,
     });
 
