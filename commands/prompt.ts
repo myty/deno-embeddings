@@ -11,15 +11,13 @@ export const prompt = async (prompt: string) => {
     name: "docs",
   });
 
-  const embeddingsResponse = await ollama.embeddings({
+  const { embedding } = await ollama.embeddings({
     prompt,
     model: MODELS.embed,
   });
 
-  embeddingsResponse.embedding;
-
   const results = await collection.query({
-    queryEmbeddings: [embeddingsResponse["embedding"]],
+    queryEmbeddings: [embedding],
     nResults: 1,
   });
 
