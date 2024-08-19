@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "dev": "docker compose -f ./.dev/docker-compose.yml up -d && deno run -A main.ts"
+    "docker": "docker compose -f ./.dev/docker-compose.yml",
+    "dev": "deno task docker up -d && deno run -A main.ts"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
