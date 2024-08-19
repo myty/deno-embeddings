@@ -2,14 +2,21 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import ollama from "ollama";
 import { MODELS } from "../models.ts";
-import { getChromaClient } from "../chroma.ts";
+import sql from "../data/db.ts";
+
+async function saveDocumentEmbeddings(
+  path: string,
+  body: string,
+  embedding: number[],
+) {
+  const embeddingValues = `[${embedding.join(",")}]`;
+
+  await sql`
+    INSERT INTO docs (id, embedding, body) VALUES (${path}, ${embeddingValues}, ${body})
+    ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding;`;
+}
 
 export const embed = async (path: string) => {
-  const client = await getChromaClient();
-  const collection = await client.getOrCreateCollection({
-    name: "docs",
-  });
-
   for (const document of getDocumentsFromPath(path)) {
     console.log(`Embedding document: ${document.path}`);
 
@@ -18,14 +25,7 @@ export const embed = async (path: string) => {
       prompt: document.body,
     });
 
-    collection.upsert({
-      ids: [document.path],
-      embeddings: [embedding],
-      documents: [document.body],
-      metadatas: {
-        path: document.path,
-      },
-    });
+    saveDocumentEmbeddings(document.path, document.body, embedding);
   }
 };
 
