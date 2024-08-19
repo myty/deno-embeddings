@@ -5,7 +5,7 @@ import sql from "../data/db.ts";
 
 async function getDocumentsFromEmbedding(
   embedding: number[],
-  take: number = 5,
+  take: number = 1,
 ): Promise<{ path: string; body: string }[]> {
   const embeddingValues = `[${embedding.join(",")}]`;
 
